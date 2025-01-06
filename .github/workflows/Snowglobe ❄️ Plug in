@@ -1,0 +1,114 @@
+```bash
+npx create-react-app projectrevolutioncomedown
+cd projectrevolutioncomedown
+yarn add antd @reduxjs/toolkit react-redux axios
+```
+
+**src/index.js**
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
+import App from './App';
+import 'antd/dist/antd.css';
+import './index.css';
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
+```
+
+**src/redux/store.js**
+```javascript
+import { configureStore } from '@reduxjs/toolkit';
+import { exampleSlice } from './exampleSlice';
+
+export const store = configureStore({
+  reducer: {
+    example: exampleSlice.reducer,
+  },
+});
+```
+
+**src/redux/exampleSlice.js**
+```javascript
+import { createSlice } from '@reduxjs/toolkit';
+
+export const exampleSlice = createSlice({
+  name: 'example',
+  initialState: {
+    data: [],
+  },
+  reducers: {
+    setData: (state, action) => {
+      state.data = action.payload;
+    },
+  },
+});
+
+export const { setData } = exampleSlice.actions;
+export default exampleSlice.reducer;
+```
+
+**src/App.js**
+```javascript
+import React from 'react';
+import { Layout, Typography } from 'antd';
+import './App.css';
+
+const { Header, Content } = Layout;
+const { Title } = Typography;
+
+const App = () => {
+  return (
+    <Layout style={{ minHeight: '100vh', backgroundColor: 'white' }}>
+      <Header style={{ backgroundColor: 'black', textAlign: 'center' }}>
+        <Title level={1} style={{ color: 'barbie pink', fontFamily: 'AnimeFont' }}>
+          ProjectRevolutionComedown
+        </Title>
+      </Header>
+      <Content style={{ padding: '50px', backgroundColor: 'white' }}>
+        <div className="chat-bubble">
+          <p style={{ fontFamily: 'AnimeFont', color: 'black' }}>Welcome to Project Revolution Comedown!</p>
+        </div>
+      </Content>
+    </Layout>
+  );
+};
+
+export default App;
+```
+
+**src/App.css**
+```css
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+.chat-bubble {
+  max-width: 300px;
+  padding: 15px;
+  border-radius: 20px;
+  background-color: barbie pink;
+  color: white;
+  margin: 0 auto;
+  position: relative;
+}
+
+.chat-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 20px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent transparent barbie pink transparent;
+}
+```
+
+**Note:** Ensure to include a custom font for the anime/manga style in the project for the `AnimeFont` to work.
